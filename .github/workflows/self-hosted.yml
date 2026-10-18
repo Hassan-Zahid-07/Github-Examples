@@ -1,0 +1,7 @@
+name: Self Hosted Job
+on: workflow_dispatch
+jobs:
+  local:
+    runs-on: [self-hosted, practice]
+    steps:
+      - run: echo "Runner ${{ runner.name }} on ${{ runner.os }}"
