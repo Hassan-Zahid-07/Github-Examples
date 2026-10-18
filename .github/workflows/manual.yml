@@ -1,0 +1,26 @@
+name: Manual Trigger with Params
+on:
+workflow_dispatch:
+inputs:
+name:
+description: 'Who to greet'
+required: true
+default: 'Hassan'
+greeting:
+description: 'Greeting'
+required: true
+default: 'Hello'
+data:
+description: 'Optional base64-encoded data'
+required: false
+default: ''
+jobs:
+greet:
+runs-on: ubuntu-latest
+env:
+NAME: ${{ inputs.name }}
+GREETING: ${{ inputs.greeting }}
+DATA: ${{ inputs.data }}
+steps:- run: echo "$GREETING, $NAME!"- name: Decode data
+if: ${{ inputs.data != '' }}
+run: echo "$DATA" | base64 -d
