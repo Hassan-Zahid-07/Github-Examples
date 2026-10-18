@@ -1,3 +1,3 @@
-# Github-Examples
-A repo containing GitHub for programmatic examples
-hassan zahid 
+Assignment 1 github Actions Certificate Hassan Zahid 
+SE 7-1 
+SAP 54481
