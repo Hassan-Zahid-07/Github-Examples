@@ -1,0 +1,27 @@
+name: Cache Demo
+on: workflow_dispatch
+jobs:
+  setup-node-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: cache-demo/package-lock.json
+      - run: npm ci
+        working-directory: cache-demo
+  actions-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache npm
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ hashFiles('cache-demo/package-lock.json') }}
+      - run: echo "cache-hit = ${{ steps.cache.outputs.cache-hit }}"
+      - run: npm ci
+        working-directory: cache-demo
