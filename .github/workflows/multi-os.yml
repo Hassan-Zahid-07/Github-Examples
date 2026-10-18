@@ -1,0 +1,31 @@
+name: Multi OS Runners
+on: workflow_dispatch
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Runner OS: ${{ runner.os }}"
+          head -n 3 /etc/os-release
+  windows:
+    runs-on: windows-latest
+    steps:
+      - name: Chocolatey
+        run: |
+          choco --version
+          choco install 7zip -y
+      - name: PowerShell
+        shell: pwsh
+        run: |
+          $PSVersionTable.PSVersion
+          [System.Environment]::OSVersion
+          Write-Host "Hello from PowerShell on $env:RUNNER_OS"
+  macos:
+    runs-on: macos-latest
+    steps:
+      - run: sw_vers
+      - name: Compile Swift
+        run: |
+          echo 'print("Hello from Swift on macOS")' > hello.swift
+          swiftc hello.swift -o hello
+          ./hello
